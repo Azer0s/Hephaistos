@@ -7,6 +7,10 @@
 *.o
 *.obj
 
+bin/
+
+.vscode
+
 # Precompiled Headers
 *.gch
 *.pch

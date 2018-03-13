@@ -1,15 +1,15 @@
 func main[]
-    a as num = 1
-    b as num = 1
-    while[true]
-        out:a
-        out:b
+    //a as num = 1
+    //b as num = 1
+    //while[true]
+    //    out:a
+    //    out:b
 
-        a = $a + $b
-        b = $a + $b
+    //    a = $a + $b
+    //    b = $a + $b
 
-        if[$a bigger 10000]
-            put a
-        end
-    end
+    //    if[$a bigger 10000]
+    //        put a
+    //    end
+    //end
 end

@@ -7,12 +7,13 @@
     void yyerror(char const*);
 %}
 
-%token FUNCTION MAIN NAME LEFT_BRACKET RIGHT_BRACKET
+%token FUNCTION MAIN LEFT_BRACKET RIGHT_BRACKET
 %start input
 
 %%
 
 input:
+    FUNCTION MAIN LEFT_BRACKET RIGHT_BRACKET
 
 %%
 

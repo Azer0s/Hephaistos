@@ -81,36 +81,36 @@ FEED                        \n
 
 {NAME}                      printf("name\n");return NAME;
 
-{FEED}                       yylineno++;
+{FEED}                      yylineno++;
 {WHITESPACE}
 {COMMENT}
-{MULTILINECOMMENT}      {
-                            register int c;
+{MULTILINECOMMENT}          {
+    register int c;
 
-                            for(;;)
-                            {
-                                while ((c = yyinput ()) != '*' && c != EOF){
-                                    /* eat up text of comment. */
+    for(;;)
+    {
+        while ((c = yyinput ()) != '*' && c != EOF){
+            /* eat up text of comment. */
 
-                                    if(c == '\n'){
-                                        yylineno++;
-                                    }
+            if(c == '\n'){
+                yylineno++;
+            }
 
-                                }
+        }
 
-                                if (c == '*')
-                                {
-                                    while ((c = yyinput ()) == '*'){}
+        if (c == '*')
+        {
+            while ((c = yyinput ()) == '*'){}
 
-                                    if (c == '/'){
-                                        break; /* found the end. */
-                                    }
-                                }
+            if (c == '/'){
+                break; /* found the end. */
+            }
+        }
 
-                                if (c == EOF){
-                                    printf ("Error: EOF in comment.\n");
-                                    break;
-                                }
-                            }
-                        }
+        if (c == EOF){
+            printf ("Error: EOF in comment.\n");
+            break;
+        }
+    }
+}
 %%

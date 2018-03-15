@@ -1,5 +1,5 @@
 func main[]
-/*  a as num = 1
+  /*a as num = 1
     b as num = 1
     while[true]
         out:a

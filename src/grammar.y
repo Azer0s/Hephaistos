@@ -44,7 +44,7 @@ input:
 
 mainmethod:
     FUNCTION MAIN LEFT_BRACKET RIGHT_BRACKET
-    ENDE
+    END
 %%
 
 void yyerror(char const* x){

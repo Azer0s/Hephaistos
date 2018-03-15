@@ -1,15 +1,13 @@
-func main[]
-  /*a as num = 1
-    b as num = 1
-    while[true]
-        out:a
-        out:b
+out:['Hello world']
+in:[]
+fib:[20]
+test:[true]
+out:[87.56]
 
-        a = $a + $b
-        b = $a + $b
+func test[word a]
+    out:[a]
+end
 
-        if[$a bigger 10000]
-            put a
-        end
-    end*/
+while[true]
+    out:['hello world']
 end

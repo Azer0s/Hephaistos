@@ -67,18 +67,18 @@ block:
 
 //Multiple statements together
 statements:
-    statement statements { /*$$ = new Statements($1,$2);*/ }
+    statement statements { $$ = new Statements($1,$2); }
     | %empty
     ;
 
 //Single line of code
 statement:
-    name COLON name { /*$$ = new Statement($1, $3);*/ }
-    | name COLON wordval { /*$$ = new Statement($1, $3);*/ }
-    | name COLON numval { /*$$ = new Statement($1, $3);*/ }                                 
-    | name COLON decval { /*$$ = new Statement($1, $3);*/ }
-    | name COLON bitval { /*$$ = new Statement($1, $3);*/ }
-    | name COLON LEFT_BRACKET inputvalue RIGHT_BRACKET { /*$$ = new Statement($1, $4);*/ }
+    name COLON name { $$ = new Statement($1, $3); }
+    | name COLON wordval { $$ = new Statement($1, $3); }
+    | name COLON numval { $$ = new Statement($1, $3); }                                 
+    | name COLON decval { $$ = new Statement($1, $3); }
+    | name COLON bitval { $$ = new Statement($1, $3); }
+    | name COLON LEFT_BRACKET inputvalue RIGHT_BRACKET { $$ = new Statement($1, $4); }
     ;
 
 inputvalue:

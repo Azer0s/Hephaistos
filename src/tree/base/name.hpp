@@ -1,5 +1,5 @@
 #pragma once
-#include "syntaxtree.hpp"
+#include "../syntaxtree.hpp"
 
 namespace hephaistos {
     class Name : public SyntaxTree{

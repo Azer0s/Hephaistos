@@ -2,12 +2,13 @@
 #include <vector>
 #include <string>
 #include <memory>
-#include "nodes.hpp"
+#include "../nodes.hpp"
 
 namespace hephaistos {
     class Statement : public SyntaxTree{
         public:
-            Statement(Name* name, SyntaxTree* input){
+            Statement(SyntaxTree* name, SyntaxTree* input){
+                nameval = reinterpret_cast<Name*>(name);
                 inputvals.push_back(input);
             }
             virtual ~Statement(){

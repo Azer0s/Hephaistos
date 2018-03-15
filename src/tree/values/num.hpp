@@ -6,7 +6,7 @@
 namespace hephaistos {
     class Num : public SyntaxTree{
         public:
-            Num(const std::string &val){
+            Num(const std::string& val){
                 value = std::stoi(val);
             }
             virtual ~Num() = default;

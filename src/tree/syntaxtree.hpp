@@ -11,6 +11,6 @@ namespace hephaistos {
             virtual std::string toCode() const = 0;
 
         protected:
-            std::vector<std::unique_ptr<SyntaxTree>> children;
+            std::vector<SyntaxTree*> children;
     };
 }

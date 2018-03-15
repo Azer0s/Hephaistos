@@ -6,7 +6,7 @@
 namespace hephaistos {
     class Dec : public SyntaxTree{
         public:
-            Dec(const std::string &val){
+            Dec(const std::string& val){
                 value = std::stod(val);
             }
             virtual ~Dec() = default;

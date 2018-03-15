@@ -4,7 +4,7 @@
 namespace hephaistos {
     class Bit : public SyntaxTree{
         public:
-            Bit(const std::string &val){
+            Bit(const std::string& val){
                 if(val == "true" || val == "TRUE"){
                     value = true;
                 }else{

@@ -2,16 +2,19 @@
     #include <math.h>
     #include <stdio.h>
     #include <stdlib.h>
-    #include "../src/tree/syntaxtree.hpp"
+    #include "../src/tree/nodes.hpp"
     #include <iostream>
+    #include <memory>
 
     using namespace hephaistos;
 
     int yylex(void);
     void yyerror(char const*);
-%}
+    extern char* yytext;
+    std::unique_ptr<SyntaxTree> root;
 
-%define api.value.type {void*}
+    #define YYSTYPE SyntaxTree*
+%}
 
 %token FUNCTION
 %token NAME
@@ -64,28 +67,26 @@ block:
 
 //Multiple statements together
 statements:
-    statement statements
-    | out statements
-    | in statements
+    statement statements { /*$$ = new Statements($1,$2);*/ }
     | %empty
     ;
 
-//Single line of statement
+//Single line of code
 statement:
-    NAME COLON NAME
-    | NAME COLON WORDVAL
-    | NAME COLON NUMVAL                                     
-    | NAME COLON DECVAL
-    | NAME COLON BITVAL
-    | NAME COLON LEFT_BRACKET inputvalue RIGHT_BRACKET
+    name COLON name { /*$$ = new Statement($1, $3);*/ }
+    | name COLON wordval { /*$$ = new Statement($1, $3);*/ }
+    | name COLON numval { /*$$ = new Statement($1, $3);*/ }                                 
+    | name COLON decval { /*$$ = new Statement($1, $3);*/ }
+    | name COLON bitval { /*$$ = new Statement($1, $3);*/ }
+    | name COLON LEFT_BRACKET inputvalue RIGHT_BRACKET { /*$$ = new Statement($1, $4);*/ }
     ;
 
 inputvalue:
-    BITVAL
-    | DECVAL
-    | NUMVAL
-    | WORDVAL
-    | NAME
+    bitval
+    | decval
+    | numval
+    | wordval
+    | name
     | statement
     | %empty
     ;
@@ -93,21 +94,6 @@ inputvalue:
 //Multiple inputvalues
 inputvalues:
     | inputvalue COMMA inputvalue
-    ;
-
-//Built in 'out' function
-out:
-    OUT COLON OUT
-    | OUT COLON WORDVAL
-    | OUT COLON NUMVAL                                     
-    | OUT COLON DECVAL
-    | OUT COLON BITVAL
-    | OUT COLON LEFT_BRACKET inputvalue RIGHT_BRACKET
-    ;
-
-//Built in 'in' function
-in:
-    IN COLON LEFT_BRACKET RIGHT_BRACKET
     ;
 
 //Function
@@ -118,17 +104,17 @@ function:
 
 //Function decleration
 functiondecleration:
-    FUNCTION NAME LEFT_BRACKET RIGHT_BRACKET
-    | FUNCTION NAME LEFT_BRACKET input RIGHT_BRACKET
+    FUNCTION name LEFT_BRACKET RIGHT_BRACKET
+    | FUNCTION name LEFT_BRACKET input RIGHT_BRACKET
     ;
 
 //Input values for functiondecleration
 input:
-    | NUM NAME
-    | WORD NAME
-    | DEC NAME
-    | BIT NAME
-    | OBJECT NAME
+    | NUM name
+    | WORD name
+    | DEC name
+    | BIT name
+    | OBJECT name
     | input COMMA input
     ;
 
@@ -139,9 +125,29 @@ while:
 
 //While decleration
 whiledecleration:
-    WHILE LEFT_BRACKET BITVAL RIGHT_BRACKET
-    | WHILE LEFT_BRACKET NAME RIGHT_BRACKET
+    WHILE LEFT_BRACKET bitval RIGHT_BRACKET
+    | WHILE LEFT_BRACKET name RIGHT_BRACKET
     | WHILE LEFT_BRACKET statement RIGHT_BRACKET
+    ;
+
+name:
+    NAME { $$ = new Name(yytext);}
+    ;
+
+wordval:
+    WORDVAL { $$ = new Word(yytext);}
+    ;
+
+decval:
+    DECVAL { $$ = new Dec(yytext);}
+    ;
+
+numval:
+    NUMVAL { $$ = new Num(yytext);}
+    ;
+
+bitval:
+    BITVAL { $$ = new Bit(yytext);}
     ;
 %%
 

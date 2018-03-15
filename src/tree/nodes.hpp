@@ -3,3 +3,5 @@
 #include "values/dec.hpp"
 #include "values/num.hpp"
 #include "values/word.hpp"
+#include "blocknodes/function.hpp"
+#include "blocknodes/statements.hpp"

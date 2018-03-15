@@ -33,9 +33,9 @@ BITVAL                      TRUE|FALSE|true|false
 
 %{
     //Built-in functions
+    //OUT                         "out"
+    //IN                          "in"
 %}
-OUT                         "out"
-IN                          "in"
 
 %{
     //Blocks
@@ -57,34 +57,36 @@ WHITESPACE                  [ \r\t\v\f]
 FEED                        \n
 
 %%
-{COLON}                     printf("Colon\n");return COLON;
+{COLON}                     return COLON;
 {COMMA}                     return COMMA;
 
-{FUNCTION}                  printf("Function\n");return FUNCTION;
-{LEFT_BRACKET}              printf("lbr\n");return LEFT_BRACKET;
-{RIGHT_BRACKET}             printf("rbr\n\n");return RIGHT_BRACKET;
+{FUNCTION}                  return FUNCTION;
+{LEFT_BRACKET}              return LEFT_BRACKET;
+{RIGHT_BRACKET}             return RIGHT_BRACKET;
 
-{WORD}                      printf("Word\n");return WORD;
-{NUM}                       printf("Num\n");return NUM;
-{DEC}                       printf("Dec\n");return DEC;
-{BIT}                       printf("Bit\n");return BIT;
-{OBJECT}                    printf("Object\n");return OBJECT;
+{WORD}                      return WORD;
+{NUM}                       return NUM;
+{DEC}                       return DEC;
+{BIT}                       return BIT;
+{OBJECT}                    return OBJECT;
 
-{WORDVAL}                   printf("Wordv\n");yylval = reinterpret_cast<void*>(new hephaistos::Word(yytext));return WORDVAL;
-{DECVAL}                    printf("Decv\n");yylval = reinterpret_cast<void*>(new hephaistos::Dec(yytext));return DECVAL;
-{NUMVAL}                    printf("Numv\n");yylval = reinterpret_cast<void*>(new hephaistos::Num(yytext));return NUMVAL;
-{BITVAL}                    printf("Bitv\n");yylval = reinterpret_cast<void*>(new hephaistos::Bit(yytext));return BITVAL;
+{WORDVAL}                   return WORDVAL;
+{DECVAL}                    return DECVAL;
+{NUMVAL}                    return NUMVAL;
+{BITVAL}                    return BITVAL;
 
-{WHILE}                     printf("While\n");return WHILE;
+{WHILE}                     return WHILE;
 {FOR}                       return FOR;
 {IF}                        return IF;
 {ELSE}                      return ELSE;
-{END}                       printf("End\n\n");return END;
+{END}                       return END;
 
-{OUT}                       printf("Out\n");return OUT;
-{IN}                        printf("In\n");return IN;
+%{
+    //{OUT}                       return OUT;
+    //{IN}                        return IN;
+%}
 
-{NAME}                      printf("Name\n");yylval = reinterpret_cast<void*>(new hephaistos::Name(yytext)); return NAME;
+{NAME}                      return NAME;
 {FEED}                      yylineno++;
 {WHITESPACE}
 {COMMENT}
@@ -94,7 +96,7 @@ FEED                        \n
     for(;;)
     {
         while ((c = yyinput ()) != '*' && c != EOF){
-            /* eat up text of comment. */
+            /* eat up text of comment. */     
 
             if(c == '\n'){
                 yylineno++;

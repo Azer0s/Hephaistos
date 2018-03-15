@@ -7,18 +7,44 @@
     void yyerror(char const*);
 %}
 
-%token NAME
 %token FUNCTION
-%token MAIN
+%token NAME
 %token LEFT_BRACKET
 %token RIGHT_BRACKET
+
+%token WORD
+%token NUM
+%token DEC
+%token BIT
+%token OBJECT
+
+%token WORDVAL
+%token NUMVAL
+%token DECVAL
+%token BITVAL
+
+%token WHILE
+%token FOR
+%token IF
+%token ELSE
 %token END
+
+%token OUT
+%token IN
+
+%token MAIN
+%token COLON
+
 %start input
 
 %%
 
 input:
-    FUNCTION MAIN LEFT_BRACKET RIGHT_BRACKET END
+    mainmethod
+
+mainmethod:
+    FUNCTION MAIN LEFT_BRACKET RIGHT_BRACKET
+    ENDE
 %%
 
 void yyerror(char const* x){

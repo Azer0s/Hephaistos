@@ -38,9 +38,6 @@
 %token ELSE
 %token END
 
-%token OUT
-%token IN
-
 %token COLON
 %token COMMA
 

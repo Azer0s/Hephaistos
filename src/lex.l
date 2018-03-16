@@ -32,12 +32,6 @@ DECVAL                      {NUMVAL}+\.{NUMVAL}+
 BITVAL                      TRUE|FALSE|true|false
 
 %{
-    //Built-in functions
-    //OUT                         "out"
-    //IN                          "in"
-%}
-
-%{
     //Blocks
 %}
 WHILE                       while|WHILE
@@ -80,11 +74,6 @@ FEED                        \n
 {IF}                        return IF;
 {ELSE}                      return ELSE;
 {END}                       return END;
-
-%{
-    //{OUT}                       return OUT;
-    //{IN}                        return IN;
-%}
 
 {NAME}                      return NAME;
 {FEED}                      yylineno++;

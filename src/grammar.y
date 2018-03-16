@@ -6,14 +6,12 @@
     #include <iostream>
     #include <memory>
 
-    using namespace hephaistos;
-
     int yylex(void);
     void yyerror(char const*);
     extern char* yytext;
-    std::unique_ptr<SyntaxTree> root;
+    std::unique_ptr<hephaistos::SyntaxTree> root;
 
-    #define YYSTYPE SyntaxTree*
+    #define YYSTYPE hephaistos::SyntaxTree*
 %}
 
 %token FUNCTION
@@ -67,33 +65,34 @@ block:
 
 //Multiple statements together
 statements:
-    statement statements { $$ = new Statements($1,$2); }
+    statement statements { $$ = new hephaistos::Statements($1,$2); }
     | %empty
     ;
 
 //Single line of code
 statement:
-    name COLON name { $$ = new Statement($1, $3); }
-    | name COLON wordval { $$ = new Statement($1, $3); }
-    | name COLON numval { $$ = new Statement($1, $3); }                                 
-    | name COLON decval { $$ = new Statement($1, $3); }
-    | name COLON bitval { $$ = new Statement($1, $3); }
-    | name COLON LEFT_BRACKET inputvalue RIGHT_BRACKET { $$ = new Statement($1, $4); }
+    name COLON name { $$ = new hephaistos::Statement($1, $3); }
+    | name COLON wordval { $$ = new hephaistos::Statement($1, $3); }
+    | name COLON numval { $$ = new hephaistos::Statement($1, $3); }                                 
+    | name COLON decval { $$ = new hephaistos::Statement($1, $3); }
+    | name COLON bitval { $$ = new hephaistos::Statement($1, $3); }
+    | name COLON LEFT_BRACKET inputvalues RIGHT_BRACKET { $$ = new hephaistos::Statement($1, $4); }
     ;
 
 inputvalue:
     bitval
-    | decval
-    | numval
-    | wordval
-    | name
-    | statement
+    | decval { $$ = $1;}
+    | numval { $$ = $1;}
+    | wordval { $$ = $1;}
+    | name { $$ = $1;}
+    | statement { $$ = $1;}
     | %empty
     ;
 
 //Multiple inputvalues
 inputvalues:
-    | inputvalue COMMA inputvalue
+    | inputvalue COMMA inputvalues { $$ = new hephaistos::Input($1,$3);}
+    | inputvalue { $$ = $1;}
     ;
 
 //Function
@@ -131,23 +130,23 @@ whiledecleration:
     ;
 
 name:
-    NAME { $$ = new Name(yytext);}
+    NAME { $$ = new hephaistos::Name(yytext);}
     ;
 
 wordval:
-    WORDVAL { $$ = new Word(yytext);}
+    WORDVAL { $$ = new hephaistos::Word(yytext);}
     ;
 
 decval:
-    DECVAL { $$ = new Dec(yytext);}
+    DECVAL { $$ = new hephaistos::Dec(yytext);}
     ;
 
 numval:
-    NUMVAL { $$ = new Num(yytext);}
+    NUMVAL { $$ = new hephaistos::Num(yytext);}
     ;
 
 bitval:
-    BITVAL { $$ = new Bit(yytext);}
+    BITVAL { $$ = new hephaistos::Bit(yytext);}
     ;
 %%
 

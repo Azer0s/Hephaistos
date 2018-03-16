@@ -8,11 +8,11 @@ namespace hephaistos {
     class Statement : public SyntaxTree{
         public:
             Statement(SyntaxTree* name, SyntaxTree* input){
-                nameval = reinterpret_cast<Name*>(name);
+                nameval = name;
                 inputvals.push_back(input);
             }
             virtual ~Statement(){
-                
+                delete nameval;
             };
             virtual std::string toCode() const{
                 std::string inputstr;
@@ -22,13 +22,15 @@ namespace hephaistos {
                     inputstr += ",";
                 }
 
-                inputstr = inputstr.substr(0,inputstr.size() - 1);
+                if(inputstr.length() != 0){
+                    inputstr = inputstr.substr(0,inputstr.size() - 1);
+                }
 
-                return nameval->toCode() + "(" + inputstr + ")";
+                return nameval->toCode() + "(" + inputstr + ");";
             };
 
         private:
-            Name* nameval;
+            SyntaxTree* nameval;
             std::vector<SyntaxTree*> inputvals;
     };
 }

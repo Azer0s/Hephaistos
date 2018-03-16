@@ -1,5 +1,6 @@
 #include "base/name.hpp"
 #include "base/statement.hpp"
+#include "base/input.hpp"
 #include "values/bit.hpp"
 #include "values/dec.hpp"
 #include "values/num.hpp"

@@ -4,13 +4,15 @@
     #include <stdlib.h>
     #include "../src/tree/nodes.hpp"
     #include <iostream>
+    #include <vector>
     #include <memory>
 
     int yylex(void);
     void yyerror(char const*);
     extern char* yytext;
-    std::unique_ptr<hephaistos::SyntaxTree> root;
-
+    hephaistos::SyntaxTree* root;
+    hephaistos::SyntaxTree* p;
+    std::vector<hephaistos::SyntaxTree*> mainobject;
     #define YYSTYPE hephaistos::SyntaxTree*
 %}
 
@@ -47,18 +49,18 @@
 %%
 
 input:
-    program
+    program { root = new hephaistos::Program(mainobject,$1); }
     ;
 
 program:
-    block program
-    | function program
-    | %empty
+    block program { mainobject.push_back($1); $$ = $2; }
+    | function program { $$ = new hephaistos::Statements($1,$2);}
+    | %empty { $$ = new hephaistos::Empty();}
     ;
 
 //Multiple statements with loops and conditions, todo implement loops
 block:
-    statements
+    statements { $$ = $1; }
     | while
     | %empty
     ;
@@ -66,7 +68,7 @@ block:
 //Multiple statements together
 statements:
     statement statements { $$ = new hephaistos::Statements($1,$2); }
-    | %empty
+    | %empty { $$ = new hephaistos::Empty(); }
     ;
 
 //Single line of code
@@ -86,35 +88,35 @@ inputvalue:
     | wordval { $$ = $1;}
     | name { $$ = $1;}
     | statement { $$ = $1;}
-    | %empty
+    | %empty { $$ = new hephaistos::Empty(); }
     ;
 
 //Multiple inputvalues
 inputvalues:
-    | inputvalue COMMA inputvalues { $$ = new hephaistos::Input($1,$3);}
+    | inputvalue COMMA inputvalues { $$ = new hephaistos::Input($1,$3); }
     | inputvalue { $$ = $1;}
     ;
 
 //Function
 function:
-    functiondecleration block END
-    | %empty
+    functiondecleration block END { $$ = new hephaistos::Function($1,$2); }
+    | %empty { $$ = new hephaistos::Empty(); }
     ;
 
 //Function decleration
 functiondecleration:
-    FUNCTION name LEFT_BRACKET RIGHT_BRACKET
-    | FUNCTION name LEFT_BRACKET input RIGHT_BRACKET
+    FUNCTION name LEFT_BRACKET RIGHT_BRACKET { $$ = new hephaistos::FunctionDecleration($2,new hephaistos::Empty());}
+    | FUNCTION name LEFT_BRACKET input RIGHT_BRACKET { $$ = new hephaistos::FunctionDecleration($2,$4);}
     ;
 
 //Input values for functiondecleration
 input:
-    | NUM name
-    | WORD name
-    | DEC name
-    | BIT name
-    | OBJECT name
-    | input COMMA input
+    | num name { $$ = new hephaistos::InputvalueDecleration($1,$2); }
+    | word name { $$ = new hephaistos::InputvalueDecleration($1,$2); }
+    | dec name { $$ = new hephaistos::InputvalueDecleration($1,$2); }
+    | bit name { $$ = new hephaistos::InputvalueDecleration($1,$2); }
+    | object name { $$ = new hephaistos::InputvalueDecleration($1,$2); }
+    | input COMMA input { $$ = new hephaistos::Input($1,$3); }
     ;
 
 //While block
@@ -130,23 +132,43 @@ whiledecleration:
     ;
 
 name:
-    NAME { $$ = new hephaistos::Name(yytext);}
+    NAME { $$ = new hephaistos::Name(yytext); }
     ;
 
 wordval:
-    WORDVAL { $$ = new hephaistos::Word(yytext);}
+    WORDVAL { $$ = new hephaistos::Word(yytext); }
     ;
 
 decval:
-    DECVAL { $$ = new hephaistos::Dec(yytext);}
+    DECVAL { $$ = new hephaistos::Dec(yytext); }
     ;
 
 numval:
-    NUMVAL { $$ = new hephaistos::Num(yytext);}
+    NUMVAL { $$ = new hephaistos::Num(yytext); }
     ;
 
 bitval:
-    BITVAL { $$ = new hephaistos::Bit(yytext);}
+    BITVAL { $$ = new hephaistos::Bit(yytext); }
+    ;
+
+word:
+    WORD {$$ = new hephaistos::Name("std::string"); }
+    ;
+
+dec:
+    DEC {$$ = new hephaistos::Name("double");}
+    ;
+
+num:
+    NUM {$$ = new hephaistos::Name("int");}
+    ;
+
+bit:
+    BIT {$$ = new hephaistos::Name("bool");}
+    ;
+
+object:
+    OBJECT {$$ = new hephaistos::Name("");}
     ;
 %%
 

@@ -7,17 +7,19 @@
 namespace hephaistos {
     class Function : public SyntaxTree{
         public:
-            Function(SyntaxTree* name, SyntaxTree* statements){
-                children.push_back(name);
-                children.push_back(statements);
+            Function(SyntaxTree* val, SyntaxTree* vals){
+                decleration = val;
+                block = vals;
             };
-            virtual ~Function(){};
+            virtual ~Function(){
+                delete decleration;
+                delete block;
+            };
             virtual std::string toCode() const{
-                std::string code;
-                for(SyntaxTree* node : children){
-                    code += node->toCode();
-                }
-                return code;
+                return decleration->toCode() + "{\n" + block->toCode() + "}";
             };
+        private:
+            SyntaxTree* decleration;
+            SyntaxTree* block;
     };
 }

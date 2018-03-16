@@ -1,8 +1,11 @@
 #include <iostream>
+#include <fstream>
+#include "tree/nodes.hpp"
 
 extern int yyparse();
 extern int yylex();
 extern int yylineno;
+extern hephaistos::SyntaxTree* root;
 
 int main(){
     int result = yyparse();
@@ -12,6 +15,11 @@ int main(){
     }else{
         std::cout << "Input invalid!" << std::endl;
     }
+
+    std::ofstream outputfile;
+    outputfile.open ("bin/main.cpp");
+    outputfile << root->toCode();
+    outputfile.close();
 
     std::cout << "Lines in source file: " << yylineno << std::endl;
 

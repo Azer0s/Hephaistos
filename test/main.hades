@@ -1,13 +1,14 @@
-out:['Hello world']
-in:[]
+out:[22]
+
+/*in:[]
 fib:[20]
 test:[true]
-out:[87.56]
+out:[87.56]*/
+
+test:['Hello world']
+
+out:[in:[]]
 
 func test[word a]
     out:[a]
-end
-
-while[true]
-    out:['hello world']
 end

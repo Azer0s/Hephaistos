@@ -9,8 +9,5 @@ namespace hephaistos {
             SyntaxTree() = default;
             virtual ~SyntaxTree() = default;
             virtual std::string toCode() const = 0;
-
-        protected:
-            std::vector<SyntaxTree*> children;
     };
 }

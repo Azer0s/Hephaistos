@@ -7,30 +7,20 @@
 namespace hephaistos {
     class Statement : public SyntaxTree{
         public:
-            Statement(SyntaxTree* name, SyntaxTree* input){
-                nameval = name;
-                inputvals.push_back(input);
+            Statement(SyntaxTree* val, SyntaxTree* vals){
+                nameval = val;
+                inputvals = vals;
             }
             virtual ~Statement(){
                 delete nameval;
+                delete inputvals;
             };
             virtual std::string toCode() const{
-                std::string inputstr;
-
-                for(SyntaxTree* node : inputvals){
-                    inputstr += node->toCode();
-                    inputstr += ",";
-                }
-
-                if(inputstr.length() != 0){
-                    inputstr = inputstr.substr(0,inputstr.size() - 1);
-                }
-
-                return nameval->toCode() + "(" + inputstr + ");";
+                return nameval->toCode() + "(" + inputvals->toCode() + ")";
             };
 
         private:
             SyntaxTree* nameval;
-            std::vector<SyntaxTree*> inputvals;
+            SyntaxTree* inputvals;
     };
 }

@@ -15,13 +15,20 @@ LEFT_BRACKET                "["
 RIGHT_BRACKET               "]"
 
 %{
+    //Access modifiers
+%}
+CLOSED                      closed|CLOSED
+REACHABLE                   reachable|REACHABLE
+GLOBAL                      global|GLOBAl
+
+%{
     //Datatypes
 %}
-WORD                        "word"
-NUM                         "num"
-DEC                         "dec"
-BIT                         "bit"
-OBJECT                      "object"
+WORD                        word|WORD
+NUM                         num|NUM
+DEC                         dec|DEC
+BIT                         bit|BIT
+OBJECT                      object|OBJECT
 
 %{
     //Datatypevalues
@@ -45,6 +52,7 @@ END                         end|END
 %}
 COLON                       ":"
 COMMA                       ","
+AS                          as|AS
 COMMENT                     \/\/.*
 MULTILINECOMMENT            "/*"
 WHITESPACE                  [ \r\t\v\f]
@@ -53,10 +61,15 @@ FEED                        \n
 %%
 {COLON}                     return COLON;
 {COMMA}                     return COMMA;
+{AS}                        return AS;
 
 {FUNCTION}                  return FUNCTION;
 {LEFT_BRACKET}              return LEFT_BRACKET;
 {RIGHT_BRACKET}             return RIGHT_BRACKET;
+
+{CLOSED}                    return CLOSED;
+{REACHABLE}                 return REACHABLE;
+{GLOBAL}                    return GLOBAL;
 
 {WORD}                      return WORD;
 {NUM}                       return NUM;

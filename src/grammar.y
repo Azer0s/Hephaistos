@@ -21,6 +21,10 @@
 %token LEFT_BRACKET
 %token RIGHT_BRACKET
 
+%token CLOSED
+%token REACHABLE
+%token GLOBAL
+
 %token WORD
 %token NUM
 %token DEC

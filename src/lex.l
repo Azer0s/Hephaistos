@@ -52,7 +52,6 @@ END                         end|END
 %}
 COLON                       ":"
 COMMA                       ","
-AS                          as|AS
 COMMENT                     \/\/.*
 MULTILINECOMMENT            "/*"
 WHITESPACE                  [ \r\t\v\f]
@@ -61,7 +60,6 @@ FEED                        \n
 %%
 {COLON}                     return COLON;
 {COMMA}                     return COMMA;
-{AS}                        return AS;
 
 {FUNCTION}                  return FUNCTION;
 {LEFT_BRACKET}              return LEFT_BRACKET;

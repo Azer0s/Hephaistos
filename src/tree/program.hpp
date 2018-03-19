@@ -23,8 +23,7 @@ namespace hephaistos {
                 program += "#include <string>\n";
                 program += "#include <iostream>\n";
                 program += "#define out(a) std::cout << a <<std::endl\n";
-
-                program += "std::string in(){ std::string val; std::cin >> val; return val;}\n";
+                program += "std::string in(){ std::string val; std::getline(std::cin,val); return val;}\n";
 
                 program += subtree->toCode();
 

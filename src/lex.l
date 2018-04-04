@@ -50,6 +50,7 @@ END                         end|END
 %{
     //Misc
 %}
+AS                          as|AS
 COLON                       ":"
 COMMA                       ","
 COMMENT                     \/\/.*
@@ -58,6 +59,7 @@ WHITESPACE                  [ \r\t\v\f]
 FEED                        \n
 
 %%
+{AS}                        return AS;
 {COLON}                     return COLON;
 {COMMA}                     return COMMA;
 

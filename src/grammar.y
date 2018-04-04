@@ -44,6 +44,7 @@
 
 %token COLON
 %token COMMA
+%token AS
 
 %start input
 

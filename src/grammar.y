@@ -57,7 +57,7 @@ input:
 
 program:
     block program { mainobject.push_back($1); $$ = $2; }
-    | function program { $$ = new hephaistos::Statements($1,$2);}
+    | function program { $$ = new hephaistos::Tuple($1,$2);}
     | %empty { $$ = new hephaistos::Empty();}
     ;
 
@@ -66,9 +66,15 @@ block:
     statements { $$ = $1; }
     | while { $$ = $1; }
     | if { $$ = $1; }
+    | variable { $$ = $1; }
     | BREAK { $$ = new hephaistos::Name("break;");}
     | block block { $$ = new hephaistos::Tuple($1,$2);}
     | %empty { $$ = new hephaistos::Empty();}
+    ;
+
+//Variable decleration
+variable:
+    name AS datatype 
     ;
 
 //Multiple statements together
@@ -85,6 +91,14 @@ statement:
     | name COLON decval { $$ = new hephaistos::Statement($1, $3); }
     | name COLON bitval { $$ = new hephaistos::Statement($1, $3); }
     | name COLON LEFT_BRACKET inputvalues RIGHT_BRACKET { $$ = new hephaistos::Statement($1, $4); }
+    ;
+
+datatype:
+    | num { $$ = $1;}
+    | word { $$ = $1;}
+    | dec { $$ = $1;}
+    | bit { $$ = $1;}
+    | object { $$ = $1;}
     ;
 
 inputvalue:
@@ -117,11 +131,7 @@ functiondecleration:
 
 //Input values for functiondecleration
 input:
-    | num name { $$ = new hephaistos::InputvalueDecleration($1,$2); }
-    | word name { $$ = new hephaistos::InputvalueDecleration($1,$2); }
-    | dec name { $$ = new hephaistos::InputvalueDecleration($1,$2); }
-    | bit name { $$ = new hephaistos::InputvalueDecleration($1,$2); }
-    | object name { $$ = new hephaistos::InputvalueDecleration($1,$2); }
+    | datatype name { $$ = new hephaistos::InputvalueDecleration($1,$2); }
     | input COMMA input { $$ = new hephaistos::Input($1,$3); }
     ;
 

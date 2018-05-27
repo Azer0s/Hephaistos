@@ -4,9 +4,9 @@
 namespace hephaistos{
     class Input : public SyntaxTree{
         public:
-            Input(SyntaxTree* vala, SyntaxTree* valb){
-                inputa = vala;
-                inputb = valb;
+            Input(SyntaxTree* c_inputa, SyntaxTree* c_inputb){
+                inputa = c_inputa;
+                inputb = c_inputb;
             }
             virtual ~Input(){
                 delete inputa;

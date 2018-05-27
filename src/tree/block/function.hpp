@@ -7,9 +7,9 @@
 namespace hephaistos {
     class Function : public SyntaxTree{
         public:
-            Function(SyntaxTree* val, SyntaxTree* vals){
-                decleration = val;
-                block = vals;
+            Function(SyntaxTree* c_decleration, SyntaxTree* c_block){
+                decleration = c_decleration;
+                block = c_block;
             };
             virtual ~Function(){
                 delete decleration;

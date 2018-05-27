@@ -7,9 +7,9 @@
 namespace hephaistos {
     class Statements : public SyntaxTree{
         public:
-            Statements(SyntaxTree* val, SyntaxTree* vals){
-                tree = val;
-                subtree = vals;
+            Statements(SyntaxTree* c_tree, SyntaxTree* c_subtree){
+                tree = c_tree;
+                subtree = c_subtree;
             };
             virtual ~Statements(){
                 delete tree;

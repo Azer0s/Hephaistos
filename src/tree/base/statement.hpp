@@ -7,9 +7,9 @@
 namespace hephaistos {
     class Statement : public SyntaxTree{
         public:
-            Statement(SyntaxTree* val, SyntaxTree* vals){
-                nameval = val;
-                inputvals = vals;
+            Statement(SyntaxTree* c_nameval, SyntaxTree* c_inputvals){
+                nameval = c_nameval;
+                inputvals = c_inputvals;
             }
             virtual ~Statement(){
                 delete nameval;

@@ -4,9 +4,9 @@
 namespace hephaistos {
     class InputvalueDecleration : public SyntaxTree{
         public:
-            InputvalueDecleration(SyntaxTree* val, SyntaxTree* vals){
-                datatype = val;
-                name = vals;
+            InputvalueDecleration(SyntaxTree* c_datatype, SyntaxTree* c_name){
+                datatype = c_datatype;
+                name = c_name;
             }
             virtual ~InputvalueDecleration(){
                 delete datatype;

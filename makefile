@@ -23,7 +23,7 @@ run:
 	@echo
 	@echo "\033[4m\033[1mCompile sourcefile\033[0m"
 	@echo
-	@./bin/a.out < test/main.hades
+	@./bin/a.out < test/main.hd
 
 runcompiled:
 	@echo

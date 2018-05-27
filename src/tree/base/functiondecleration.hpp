@@ -4,9 +4,9 @@
 namespace hephaistos {
     class FunctionDecleration : public SyntaxTree{
         public:
-            FunctionDecleration(SyntaxTree* val, SyntaxTree* vals){
-                name = val;
-                inputdecleration = vals;
+            FunctionDecleration(SyntaxTree* c_name, SyntaxTree* c_inputdecleration){
+                name = c_name;
+                inputdecleration = c_inputdecleration;
             }
             virtual ~FunctionDecleration(){
                 delete name;

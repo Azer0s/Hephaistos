@@ -11,4 +11,11 @@ out:[in:[]]
 
 func test[word a]
     out:[a]
+
+    if[true]
+        out:'this is an if condition'
+    end
+    else
+        out:'else condition'
+    end
 end

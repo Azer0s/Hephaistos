@@ -13,5 +13,6 @@
 
 #include "block/function.hpp"
 #include "block/statements.hpp"
+#include "block/if.hpp"
 
 #include "tuple.hpp"

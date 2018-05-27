@@ -64,6 +64,8 @@ program:
 block:
     statements { $$ = $1; }
     | while
+    | if { $$ = $1; }
+    | block block { $$ = new hephaistos::Tuple($1,$2);}
     | %empty
     ;
 
@@ -128,9 +130,25 @@ while:
 
 //While decleration
 whiledecleration:
-    WHILE LEFT_BRACKET bitval RIGHT_BRACKET
-    | WHILE LEFT_BRACKET name RIGHT_BRACKET
-    | WHILE LEFT_BRACKET statement RIGHT_BRACKET
+    WHILE controldecleration
+    ;
+
+//If block
+if:
+    ifdecleration statements END ELSE statements END { $$ = new hephaistos::If($1,$2,$5);}
+    | ifdecleration statements END { $$ = new hephaistos::If($1,$2, new hephaistos::Empty());}
+    ;
+
+//If decleration
+ifdecleration:
+    IF controldecleration { $$ = $2; }
+    ;
+
+//Flow control declerations
+controldecleration:
+    LEFT_BRACKET bitval RIGHT_BRACKET { $$ = $2;}
+    | LEFT_BRACKET name RIGHT_BRACKET { $$ = $2;}
+    | LEFT_BRACKET statement RIGHT_BRACKET { $$ = $2;}
     ;
 
 name:

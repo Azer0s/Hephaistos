@@ -46,6 +46,7 @@ FOR                         for|FOR
 IF                          if|IF
 ELSE                        else|ELSE
 END                         end|END
+BREAK                       break|BREAK
 
 %{
     //Misc
@@ -87,6 +88,7 @@ FEED                        \n
 {IF}                        return IF;
 {ELSE}                      return ELSE;
 {END}                       return END;
+{BREAK}                     return BREAK;
 
 {NAME}                      return NAME;
 {FEED}                      yylineno++;

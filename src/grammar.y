@@ -41,6 +41,7 @@
 %token IF
 %token ELSE
 %token END
+%token BREAK
 
 %token COLON
 %token COMMA
@@ -63,10 +64,11 @@ program:
 //Multiple statements with loops and conditions, todo implement loops
 block:
     statements { $$ = $1; }
-    | while
+    | while { $$ = $1; }
     | if { $$ = $1; }
+    | BREAK { $$ = new hephaistos::Name("break;");}
     | block block { $$ = new hephaistos::Tuple($1,$2);}
-    | %empty
+    | %empty { $$ = new hephaistos::Empty();}
     ;
 
 //Multiple statements together
@@ -125,18 +127,18 @@ input:
 
 //While block
 while:
-    whiledecleration statements END
+    whiledecleration block END { $$ = new hephaistos::While($1, $2); }
     ;
 
 //While decleration
 whiledecleration:
-    WHILE controldecleration
+    WHILE controldecleration { $$ = $2; }
     ;
 
 //If block
 if:
-    ifdecleration statements END ELSE statements END { $$ = new hephaistos::If($1,$2,$5);}
-    | ifdecleration statements END { $$ = new hephaistos::If($1,$2, new hephaistos::Empty());}
+    ifdecleration block END ELSE block END { $$ = new hephaistos::If($1,$2,$5);}
+    | ifdecleration block END { $$ = new hephaistos::If($1,$2, new hephaistos::Empty());}
     ;
 
 //If decleration

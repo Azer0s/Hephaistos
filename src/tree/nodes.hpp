@@ -14,5 +14,6 @@
 #include "block/function.hpp"
 #include "block/statements.hpp"
 #include "block/if.hpp"
+#include "block/while.hpp"
 
 #include "tuple.hpp"

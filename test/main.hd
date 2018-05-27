@@ -18,4 +18,9 @@ func test[word a]
     else
         out:'else condition'
     end
+
+    while[true]
+        out:'Loop'
+        break
+    end
 end

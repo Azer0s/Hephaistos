@@ -5,21 +5,21 @@
 #include "../nodes.hpp"
 
 namespace hephaistos {
-    class Function : public SyntaxTree{
+    class While : public SyntaxTree{
         public:
-            Function(SyntaxTree* c_decleration, SyntaxTree* c_block){
-                decleration = c_decleration;
+            While(SyntaxTree* c_condition, SyntaxTree* c_block){
+                condition = c_condition;
                 block = c_block;
             };
-            virtual ~Function(){
-                delete decleration;
+            virtual ~While(){
+                delete condition;
                 delete block;
             };
             virtual std::string toCode() const{
-                return decleration->toCode() + "{\n" + block->toCode() + "\n}";
+                return "while(" + condition->toCode() + ")" + "{\n" + block->toCode() + "\n}";
             };
         private:
-            SyntaxTree* decleration;
+            SyntaxTree* condition;
             SyntaxTree* block;
     };
 }
